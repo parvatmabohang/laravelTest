@@ -34,6 +34,15 @@ class AdminController extends Controller
         }
         
     }
+    public function settings()
+    {
+        if(Session::has('adminSession')) {
+            return view("admin.settings");
+        } else {
+            return redirect('/admin')->with('flash_message_error','Please login to access');
+        }
+        
+    }
     public function logout()
     {
          Session::flush();

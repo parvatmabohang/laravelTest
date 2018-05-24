@@ -25,6 +25,7 @@
 //});
 Route::match(['get','post'],'/admin','AdminController@login');
 Route::get('/admin/dashboard','AdminController@dashboard');
+Route::get('/admin/settings','AdminController@settings');
 Route::get('/logout','AdminController@logout');
 Route::get('/logs','AdminController@login');
 Auth::routes();
