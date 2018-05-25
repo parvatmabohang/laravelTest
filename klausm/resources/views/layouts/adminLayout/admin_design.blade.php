@@ -34,6 +34,8 @@
 <script src="{{ asset('js/backend_js/jquery.validate.js') }}"></script>    
 <script src="{{ asset('js/backend_js/matrix.js') }}"></script> 
 <script src="{{ asset('js/backend_js/matrix.form_validation.js') }}"></script> 
+<script src="{{ asset('js/backend_js/jquery.dataTables.min.js') }}"></script>     
+<script src="{{ asset('js/backend_js/matrix.tables.js') }}"></script>
 
 <script type="text/javascript">
   // This function is called from the pop-up menus to transfer to

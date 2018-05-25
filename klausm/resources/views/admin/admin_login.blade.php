@@ -25,7 +25,7 @@
            <strong>{{ session('flash_message_success') }}</strong>
           </div>
             @endif
-            <form id="loginform" class="form-vertical" action="{{ url('/admin') }}" method="post"> 
+            <form id="loginform" class="form-vertical" action="{{ url('/admin') }}" method="post">  {{ csrf_field() }}
 
 				 <div class="control-group normal_text"> <h3><img src="{{ asset('images/backend_images/logo.png') }}" alt="Logo" /></h3></div>
                 <div class="control-group">
@@ -41,7 +41,7 @@
                             <span class="add-on bg_ly"><i class="icon-lock"></i></span><input type="password" name="password" placeholder="Enter Password" />
                         </div>
                     </div>
-                </div> <input type="hidden" name="_token" value="{{csrf_token()}}" >
+                </div>
                 <div class="form-actions">
                     <span class="pull-left"><a href="#" class="flip-link btn btn-info" id="to-recover">Lost password?</a></span>
                     <span class="pull-right"><input type="submit" value="Login" class="btn btn-success" /></span>
