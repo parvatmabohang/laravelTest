@@ -24,8 +24,6 @@
 @yield('content')
     
 @include('layouts.adminLayout.admin_footer')
-
-
 <script src="{{ asset('js/backend_js/jquery.min.js') }}"></script> 
 <script src="{{ asset('js/backend_js/jquery.ui.custom.js') }}"></script> 
 <script src="{{ asset('js/backend_js/bootstrap.min.js') }}"></script>  
@@ -36,6 +34,7 @@
 <script src="{{ asset('js/backend_js/matrix.form_validation.js') }}"></script> 
 <script src="{{ asset('js/backend_js/jquery.dataTables.min.js') }}"></script>     
 <script src="{{ asset('js/backend_js/matrix.tables.js') }}"></script>
+<script src="{{ asset('js/backend_js/matrix.popover.js') }}"></script>
 
 <script type="text/javascript">
   // This function is called from the pop-up menus to transfer to

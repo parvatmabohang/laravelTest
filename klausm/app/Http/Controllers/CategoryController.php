@@ -28,6 +28,7 @@ class CategoryController extends Controller
     public function viewCategories()
     {
         if(Session::has('adminSession')) {
+            $rt = Session::get('adminSession');
             $categories = Category::get();
         return view('admin.categories.view_categories')->with(compact('categories'));
         } else {
