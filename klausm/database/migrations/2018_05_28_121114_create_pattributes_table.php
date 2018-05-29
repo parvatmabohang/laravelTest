@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProdoductsAttributesTable extends Migration
+class CreatePattributesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateProdoductsAttributesTable extends Migration
      */
     public function up()
     {
-        Schema::create('products_attributes', function (Blueprint $table) {
+        Schema::create('pattributes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('product_id');
             $table->string('sku');
@@ -21,9 +21,6 @@ class CreateProdoductsAttributesTable extends Migration
             $table->float('price');
             $table->integer('stock');  
             $table->timestamps();
-            $table->foreign('product_id')
-                  ->references('id')->on('products')
-                  ->onDelete('cascade');
         });
     }
 
@@ -34,6 +31,6 @@ class CreateProdoductsAttributesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('prododucts_attributes');
+        Schema::dropIfExists('pattributes');
     }
 }

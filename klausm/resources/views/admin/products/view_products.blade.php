@@ -47,7 +47,7 @@
                     <td>{{ $product->price }}</td>
                     <td>
                     <img src="{{ asset('/images/backend_images/products/small/'.$product->image) }}" style="width:70px"></td>
-                    <td class='center'><a href="#myModal{{ $product->id }}" data-toggle="modal"  class="btn btn-success btn-mini">View</a> <a href="{{ url('/admin/edit-product/'.$product->id) }}" class="btn btn-primary btn-mini">Edit</a> <a onclick="return confirm('Are you sure you want to delete this Product?');" href="{{ url('/admin/delete-product/'.$product->id) }}" class="btn btn-danger btn-mini">Delete</a></td>
+                    <td class='center'><a href="#myModal{{ $product->id }}" data-toggle="modal"  class="btn btn-success btn-mini">View</a> <a href="{{ url('/admin/edit-product/'.$product->id) }}" class="btn btn-primary btn-mini">Edit</a> <a href="{{ url('/admin/add-attributes/'.$product->id) }}" class="btn btn-success btn-mini">Add</a> <a onclick="return confirm('Are you sure you want to delete this Product?');" href="{{ url('/admin/delete-product/'.$product->id) }}" class="btn btn-danger btn-mini">Delete</a></td>
                 </tr>
                        
                             <div id="myModal{{ $product->id }}" class="modal hide">

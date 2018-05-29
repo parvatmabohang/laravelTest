@@ -9,6 +9,7 @@ use Session;
 use Auth;
 use App\Product;
 use App\Category;
+use App\Pattribute;
 
 class ProductsController extends Controller
 {
@@ -126,5 +127,40 @@ class ProductsController extends Controller
     {
         Product::where(['id'=>$id])->delete();
         return redirect()->back()->with('flash_message_success','Product has been removed...');
+    }
+    public function addAttributes(Request $request,$id = null)
+    {
+        if(Session::has('adminSession')) {
+                 $productDetails = Product::with('attributes')->where(['id'=>$id])->first();
+                 // $productDetails = json_decode(json_encode($productDetails));
+                 //echo "<pre>"; print_r($productDetails); die;
+                 if ($request->isMethod('post')) {
+                     $data = $request->all();
+                     //echo "<pre>"; print_r($data); die;
+                     foreach($data['sku'] as $key=>$val) {
+                         if(!empty($val)) {
+                             $attribute = new Pattribute;
+                             $attribute->product_id = $id;
+                             $attribute->sku = $val;
+                             $attribute->size = $data['size'][$key];
+                             $attribute->price = $data['price'][$key];
+                             $attribute->stock = $data['stock'][$key];
+                             $attribute->save();
+                             //echo "<pre>";print_r($attribute);die;
+                         }
+                     }
+                     return redirect()->back()->with('flash_message_success','Product Attributes Added Successfully');
+                 }
+                //return redirect()->back()->with('flash_message_success','Category Deleted Successfully');
+                return view("admin.products.add_attributes")->with(compact('productDetails'));
+            
+        } else {
+            return redirect('/admin')->with('flash_message_error','Please login to access');
+        }
+    }
+    public function deleteAttribute($id = null)
+    {
+        Pattribute::where(['id'=>$id])->delete();
+        return redirect()->back()->with('flash_message_success','Attribute has been removed...');
     }
 }

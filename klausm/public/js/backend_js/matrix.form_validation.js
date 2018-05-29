@@ -205,4 +205,22 @@ $(document).ready(function(){
 			$(element).parents('.control-group').addClass('success');
 		}
 	});
+        $(document).ready(function(){
+            var maxField = 10; //Input fields increment limitation
+            var addButton = $('.add_button'); //Add button selector
+            var wrapper = $('.field_wrapper'); //Input field wrapper
+            var fieldHTML = '<div class="field_wrapper" style="margin-left:180px;margin-top:5px;"> <input type="text" name="sku[]" id="sku" placeholder="SKU" style="width:120px;" required/> <input type="text" name="size[]" id="size" placeholder="Size" style="width:120px;" required/> <input type="number" name="price[]" id="price" placeholder="Price" style="width:120px;" required/> <input type="number" name="stock[]" id="stock" placeholder="Stock" style="width:120px;" required/><a href="javascript:void(0);" class="remove_button"        title="Remove field">Remove</a></div>'; //New input field html 
+            var x = 1; //Initial field counter is 1
+            $(addButton).click(function(){ //Once add button is clicked
+                if(x < maxField){ //Check maximum number of input fields
+                x++; //Increment field counter
+                $(wrapper).append(fieldHTML); // Add field html
+                }
+            });
+            $(wrapper).on('click', '.remove_button', function(e){ //Once remove button is clicked
+              e.preventDefault();
+              $(this).parent('div').remove(); //Remove field html
+              x--; //Decrement field counter
+    });
+});
 });

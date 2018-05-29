@@ -23,6 +23,13 @@
 //Route::get('/login', function () {
 //    return view('login');
 //});
+
+//FrontEnd
+Route::get('/','IndexController@index');
+Route::get('/admin/product-details','IndexController@productDetails');
+
+////
+
 Route::match(['get','post'],'/admin','AdminController@login');
 Route::get('/admin/dashboard','AdminController@dashboard');
 Route::get('/admin/settings','AdminController@settings');
@@ -45,6 +52,10 @@ Route::get('/admin/view-products','ProductsController@viewProducts');
 Route::get('/admin/delete-product/{id}','ProductsController@deleteProduct');
 Route::get('/admin/delete-product-image/{id}','ProductsController@deleteProductImage');
 
+//Product ADD Attributes
+Route::match(['get','post'],'/admin/add-attributes/{id}','ProductsController@addAttributes');
+Route::get('/admin/delete-attribute/{id}','ProductsController@deleteAttribute');
+
 Auth::routes();
-Route::match(['get','post'],'/','HomeController@index');
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::match(['get','post'],'/','HomeController@index');
+//Route::get('/home', 'HomeController@index')->name('home');

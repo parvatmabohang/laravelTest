@@ -59,4 +59,5 @@ class CategoryController extends Controller
             return redirect('/admin')->with('flash_message_error','Please login to access');
         }
     }
+    
 }
