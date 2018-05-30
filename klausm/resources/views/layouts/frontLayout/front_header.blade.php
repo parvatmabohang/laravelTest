@@ -1,4 +1,9 @@
-	<header id="header"><!--header-->
+<?php 
+use App\Http\Controllers\Controller;
+$mainCategories = Controller::mainCategories();
+?>
+
+<header id="header"><!--header-->
 		<div class="header_top"><!--header_top-->
 			<div class="container">
 				<div class="row">
@@ -30,7 +35,7 @@
 				<div class="row">
 					<div class="col-sm-4">
 						<div class="logo pull-left">
-							<a href="index.html"><img src="{{ asset('images/frontend_images/home/logo.png') }}" alt="" /></a>
+							<a href="{{ url('/')}}"><img src="{{ asset('images/frontend_images/home/logo.png') }}" alt="" /></a>
 						</div>
 						<div class="btn-group pull-right">
 							<div class="btn-group">
@@ -94,6 +99,12 @@
 										<li><a href="cart.html">Cart</a></li> 
 										<li><a href="login.html">Login</a></li> 
                                     </ul>
+                                </li> 
+                                <li class="dropdown"><a href="#">Category<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">@foreach($mainCategories as $category)
+                                        <li><a href="{{ url('/products/'.$category->url) }}">{{ $category->name }}</a></li>@endforeach
+                                    </ul>
+                                    
                                 </li> 
 								<li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">

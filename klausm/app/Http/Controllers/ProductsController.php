@@ -120,6 +120,22 @@ class ProductsController extends Controller
     }
     public function deleteProductImage($id = null)
     {
+        $productImage = Product::where(['id'=>$id])->first();
+        
+        $large_image_path = 'images/backend_images/products/large/';
+        $medium_image_path = 'images/backend_images/products/medium/';
+        $small_image_path = 'images/backend_images/products/small/';
+        
+        if(file_exists($large_image_path.$productImage->image)) {
+            unlink($large_image_path.$productImage->image);
+        }
+        if(file_exists($medium_image_path.$productImage->image)) {
+            unlink($medium_image_path.$productImage->image);
+        }
+        if(file_exists($small_image_path.$productImage->image)) {
+            unlink($small_image_path.$productImage->image);
+        }
+        
         Product::where(['id'=>$id])->update(['image'=>'']);
         return redirect()->back()->with('flash_message_success','Product image has been deleted...');
     }
@@ -162,5 +178,28 @@ class ProductsController extends Controller
     {
         Pattribute::where(['id'=>$id])->delete();
         return redirect()->back()->with('flash_message_success','Attribute has been removed...');
+    }
+    public function products($url = null)
+    {
+        //Show Error Page
+        $countCategory = Category::where(['url'=>$url,'status'=>1])->count();
+        if($countCategory == 0) {
+            abort(404);
+        }
+        $categoryDetails = Category::where(['url'=>$url,'status'=>1])->first();
+        $categories = Category::where(['parent_id'=>0,'status'=>1])->get();
+        //echo $categoryDetails->id;die;
+        $productsAll = Product::where(['category_id'=>$categoryDetails->id])->get();
+        return view('products.listing')->with(compact('categories','categoryDetails','productsAll'));
+    }
+    public function getProductPrice(Request $request) 
+    {
+        $data = $request->all();
+        $re = $data['idSize'];
+        $ret = Pattribute::where(['id'=>$re])->first();
+        $yu = [];
+        $yu[] = $ret->price;
+        $yu[] =  $ret->stock;
+        echo json_encode($yu);
     }
 }

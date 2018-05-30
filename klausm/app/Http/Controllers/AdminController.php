@@ -58,9 +58,9 @@ class AdminController extends Controller
             $current_password = $data['current_pwd'];
             $check_password = User::where(['admin'=>'1','email'=>$rt])->first();
             if(Hash::check($current_password,$check_password->password)){
-                echo true;die;
+                echo true;
             } else {
-                echo "false";die;
+                echo "false";
             }
             
         } else {

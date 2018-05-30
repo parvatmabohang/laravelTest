@@ -14,9 +14,15 @@ class CategoryController extends Controller
         if($request->isMethod('post')) {
             $data = $request->all();
             $category = new Category;
+            $category->parent_id = 0;
             $category->name = $data['category_name'];
             $category->description = $data['description'];
             $category->url = $data['url'];
+            if(empty($data['status'])) {
+                $category->status = 0;
+            } else {
+            $category->status = $data['status'];
+            }
             $category->save();
             return redirect('/admin/view-categories')->with('flash_message_success','Category Added Successfully');
         }
@@ -40,7 +46,11 @@ class CategoryController extends Controller
         if(Session::has('adminSession')) {
             if($request->isMethod('post')) {
                 $data = $request->all();
-                Category::where(['id'=>$id])->update(['name'=>$data['category_name'],'description'=>$data['description'],'url'=>$data['url']]);
+                if(empty($data['status'])) {
+                    $status = 0;} else {
+                    $status = $data['status'];
+                }
+                Category::where(['id'=>$id])->update(['name'=>$data['category_name'],'description'=>$data['description'],'url'=>$data['url'],'status'=>$status]);
                 return redirect('/admin/view-categories')->with('flash_message_success','Category Updated Successfully');
             }
             $categoryDetails = Category::where(['id'=>$id])->first();

@@ -26,9 +26,16 @@
 
 //FrontEnd
 Route::get('/','IndexController@index');
-Route::get('/admin/product-details','IndexController@productDetails');
+Route::get('/admin/product-details/{id}','IndexController@productDetails');
 
-////
+//Get product price attribute
+Route::get('/get-product-price','ProductsController@getProductPrice');
+
+
+//Listing Products
+Route::get('/products/{url}','ProductsController@products');
+
+////Admin
 
 Route::match(['get','post'],'/admin','AdminController@login');
 Route::get('/admin/dashboard','AdminController@dashboard');

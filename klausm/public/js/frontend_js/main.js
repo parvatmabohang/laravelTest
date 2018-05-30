@@ -28,3 +28,27 @@ $(document).ready(function(){
 		});
 	});
 });
+
+$(document).ready(function(){
+        $('#selSize').change(function(){
+         var idSize = $(this).val();
+         if(idSize == ""){
+             return false;
+          }
+         //alert(idSize);
+         $.ajax({
+             type:'get',
+             url:'/get-product-price',
+             data:{idSize:idSize},
+             success:function(resp){
+                   var obj = $.parseJSON(resp);
+                   $('#getPrice').html("NRs."+obj[0]);
+                   $('#getStock').html("<b style='color:red;'>"+obj[1]+"</b> In Stock");
+                 
+                 //alert(resp);
+             },error:function(){
+                 alert("Error");
+             } 
+     });
+   });
+});
