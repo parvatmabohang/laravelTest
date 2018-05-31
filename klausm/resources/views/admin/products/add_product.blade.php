@@ -62,7 +62,7 @@
                 <div class="control-group">
                 <label class="control-label">Product Image</label>
                 <div class="controls">
-                  <input type="file" name="image" id="image">
+                  <input type="file" name="image[]" id="image" multiple>
                 </div>
               </div>
               <div class="form-actions">

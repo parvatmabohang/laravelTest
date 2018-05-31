@@ -11,7 +11,7 @@ class IndexController extends Controller
     public function index()
     {
         //Get Products
-        $productsAll = Product::orderBy('id','DESC')->get();
+        $productsAll = Product::with('images')->orderBy('id','DESC')->get();
         
         //Get Categories
         $categories = Category::where(['parent_id'=>0,'status'=>1])->get();
@@ -20,7 +20,7 @@ class IndexController extends Controller
     public function productDetails($id= null)
     {
         //$productS = Product::with('attributes')->where(['id'=>$id])->first();
-        $productS = Product::with('attributes')->where(['id'=>$id])->first();
+        $productS = Product::with('attributes','images')->where(['id'=>$id])->first();
         //$productS = json_decode(json_encode($productS));
         //echo "<pre>";print_r($productS); die;
         //print_r($productS);die;

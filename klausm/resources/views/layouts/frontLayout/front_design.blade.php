@@ -6,6 +6,12 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Home | Klausm</title>
+    <!-- 1. Link to jQuery (1.8 or later), -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> <!-- 33 KB -->
+
+<!-- fotorama.css & fotorama.js. -->
+    <link  href="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet"> <!-- 3 KB -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script> <!-- 16 KB -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="{{ asset('css/frontend_css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/frontend_css/font-awesome.min.css') }}" rel="stylesheet">

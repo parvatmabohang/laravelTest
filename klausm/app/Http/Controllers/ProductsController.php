@@ -10,6 +10,7 @@ use Auth;
 use App\Product;
 use App\Category;
 use App\Pattribute;
+use App\Pimage;
 
 class ProductsController extends Controller
 {
@@ -17,9 +18,8 @@ class ProductsController extends Controller
     {
         if(Session::has('adminSession')) {
             if($request->isMethod('post')) {
-               $data = $request->all();
-                //echo "<pre>";print_r($data); die;
-               $product = new Product;
+                $data = $request->all();
+                $product = new Product;
                 $product->user_id = 8;
                 $product->category_id = $data['category_id'];
                 $product->product_name = $data['product_name'];
@@ -28,23 +28,44 @@ class ProductsController extends Controller
                 $product->description = $data['description'];
                 $product->price = $data['product_price'];
                 //upload image
-                if($request->hasFile('image')) {
-                    $image_tmp=Input::file('image');
-                    if($image_tmp->isValid()){
-                        $extension = $image_tmp->getClientOriginalExtension();
+                //if($request->hasFile('image')) {
+                  //  $image_tmp=Input::file('image');
+                   // if($image_tmp->isValid()){
+                     //   $extension = $image_tmp->getClientOriginalExtension();
+                      //  $filename=rand(111,99999).'.'.$extension;
+                      //  $large_image_path='images/backend_images/products/large/'.$filename;
+                      //  $medium_image_path='images/backend_images/products/medium/'.$filename;
+                       // $small_image_path='images/backend_images/products/small/'.$filename;
+                        //Resize Images
+                      //  Image::make($image_tmp)->save($large_image_path);
+                      //  Image::make($image_tmp)->resize(600,600)->save($medium_image_path);
+                     //   Image::make($image_tmp)->resize(300,300)->save($small_image_path);
+                     //   $product->image = $filename;
+                   // }
+                //}
+                
+                $product->save();
+                $last_id = $product->id;
+                if($files=$request->file('image')){
+                    
+                    for ($i=0;$i<count($files);$i++) {
+                        $pimage = new Pimage;
+                        $pimage->product_id = $last_id;
+                        $name=$files[$i]->getPathName();
+                        $extension = $files[$i]->getClientOriginalExtension();
                         $filename=rand(111,99999).'.'.$extension;
                         $large_image_path='images/backend_images/products/large/'.$filename;
                         $medium_image_path='images/backend_images/products/medium/'.$filename;
                         $small_image_path='images/backend_images/products/small/'.$filename;
                         //Resize Images
-                        Image::make($image_tmp)->save($large_image_path);
-                        Image::make($image_tmp)->resize(600,600)->save($medium_image_path);
-                        Image::make($image_tmp)->resize(300,300)->save($small_image_path);
-                        $product->image = $filename;
+                        Image::make($name)->save($large_image_path);
+                        Image::make($name)->resize(600,600)->save($medium_image_path);
+                        Image::make($name)->resize(300,300)->save($small_image_path);
+                        //well
+                        $pimage->image = $filename;
+                        $pimage->save();
                     }
-                }
-                
-                $product->save();
+                 }
                 return redirect("/admin/view-products")->with('flash_message_success','Product Added Successfully');
             }
             $categories = Category::where(['parent_id'=>0])->get();
@@ -62,7 +83,9 @@ class ProductsController extends Controller
     {
         if(Session::has('adminSession')) {
             $rt = Session::get('adminSession');
-            $products = Product::where(['user_id'=>8])->get();
+            $products = Product::with('images')->where(['user_id'=>8])->get();
+            //$products = json_decode(json_encode($products));
+            //echo "<pre>";print_r($products);die;
             foreach($products as $key=>$val) {
                 $category_name=Category::where(['id'=>$val->category_id])->first();
                 $products[$key]->category_name=$category_name->name;
@@ -78,28 +101,47 @@ class ProductsController extends Controller
             if($request->isMethod('post')) {
                 $data = $request->all();
                 
-                if($request->hasFile('image')) {
-                    $image_tmp=Input::file('image');
-                    if($image_tmp->isValid()){
-                        $extension = $image_tmp->getClientOriginalExtension();
+                //if($request->hasFile('image')) {
+                   // $image_tmp=Input::file('image');
+                    //if($image_tmp->isValid()){
+                      //  $extension = $image_tmp->getClientOriginalExtension();
+                       // $filename=rand(111,99999).'.'.$extension;
+                        //$large_image_path='images/backend_images/products/large/'.$filename;
+                        //$medium_image_path='images/backend_images/products/medium/'.$filename;
+                        //$small_image_path='images/backend_images/products/small/'.$filename;
+                        //Resize Images
+                       // Image::make($image_tmp)->save($large_image_path);
+                       // Image::make($image_tmp)->resize(600,600)->save($medium_image_path);
+                       // Image::make($image_tmp)->resize(300,300)->save($small_image_path);
+                        
+                    //}
+               // }
+                
+                Product::where(['id'=>$id])->update(['category_id'=>$data['category_id'],'product_name'=>$data['product_name'],'product_code'=>$data['product_code'],'product_color'=>$data['product_color'],'description'=>$data['description'],'price'=>$data['product_price']]);
+                
+                if($files=$request->file('image')){
+                    
+                    for ($i=0;$i<count($files);$i++) {
+                        $pimage = new Pimage;
+                        $pimage->product_id = $id;
+                        $name=$files[$i]->getPathName();
+                        $extension = $files[$i]->getClientOriginalExtension();
                         $filename=rand(111,99999).'.'.$extension;
                         $large_image_path='images/backend_images/products/large/'.$filename;
                         $medium_image_path='images/backend_images/products/medium/'.$filename;
                         $small_image_path='images/backend_images/products/small/'.$filename;
                         //Resize Images
-                        Image::make($image_tmp)->save($large_image_path);
-                        Image::make($image_tmp)->resize(600,600)->save($medium_image_path);
-                        Image::make($image_tmp)->resize(300,300)->save($small_image_path);
-                        
+                        Image::make($name)->save($large_image_path);
+                        Image::make($name)->resize(600,600)->save($medium_image_path);
+                        Image::make($name)->resize(300,300)->save($small_image_path);
+                        //well
+                        $pimage->image = $filename;
+                        $pimage->save();
                     }
-                } else {
-                    $filename=$data['current_image'];
-                }
-                
-                Product::where(['id'=>$id])->update(['category_id'=>$data['category_id'],'product_name'=>$data['product_name'],'product_code'=>$data['product_code'],'product_color'=>$data['product_color'],'description'=>$data['description'],'price'=>$data['product_price'],'image'=>$filename]);
+                 }
                 return redirect()->back()->with('flash_message_success','Product Updated Successfully');
             }
-            $productDetails = Product::where(['id'=>$id])->first();
+            $productDetails = Product::with('images')->where(['id'=>$id])->first();
             
             $categories = Category::where(['parent_id'=>0])->get();
             
@@ -120,7 +162,7 @@ class ProductsController extends Controller
     }
     public function deleteProductImage($id = null)
     {
-        $productImage = Product::where(['id'=>$id])->first();
+        $productImage = Pimage::where(['id'=>$id])->first();
         
         $large_image_path = 'images/backend_images/products/large/';
         $medium_image_path = 'images/backend_images/products/medium/';
@@ -136,7 +178,7 @@ class ProductsController extends Controller
             unlink($small_image_path.$productImage->image);
         }
         
-        Product::where(['id'=>$id])->update(['image'=>'']);
+        Pimage::where(['id'=>$id])->delete();
         return redirect()->back()->with('flash_message_success','Product image has been deleted...');
     }
     public function deleteProduct($id = null)
@@ -148,7 +190,7 @@ class ProductsController extends Controller
     {
         if(Session::has('adminSession')) {
                  $productDetails = Product::with('attributes')->where(['id'=>$id])->first();
-                 // $productDetails = json_decode(json_encode($productDetails));
+                  //$productDetails = json_decode(json_encode($productDetails));
                  //echo "<pre>"; print_r($productDetails); die;
                  if ($request->isMethod('post')) {
                      $data = $request->all();

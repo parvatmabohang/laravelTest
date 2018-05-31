@@ -10,4 +10,8 @@ class Product extends Model
     {
         return $this->hasMany('App\Pattribute','product_id');
     }
+    public function images()
+    {
+        return $this->hasMany('App\Pimage','product_id');
+    }
 }

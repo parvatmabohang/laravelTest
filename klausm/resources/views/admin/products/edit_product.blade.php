@@ -62,11 +62,15 @@
                 <div class="control-group">
                 <label class="control-label">Product Image</label>
                 <div class="controls">
-                  <input type="file" name="image" id="image">
-                    <input type="hidden" name="current_image" value="{{ $productDetails->image }}" >
-                    @if(!empty($productDetails->image))
-                    <img src="{{ asset('/images/backend_images/products/small/'.$productDetails->image) }}" style="width:50px"> |<a href="{{ url('/admin/delete-product-image/'.$productDetails->id)}}">Delete</a>
-                    @endif
+                  <input type="file" name="image[]" id="image" multiple>
+                    <?php if(count($productDetails['images'])>0) {
+                            $tyn="";
+                            foreach($productDetails['images'] as $ty){
+                               $tyn=$ty['image'];
+                               $tyid=$ty['id'];
+                              ?>
+                    <img src="{{ asset('/images/backend_images/products/small/'.$tyn) }}" style="width:50px"> |<a href="{{ url('/admin/delete-product-image/'.$tyid)}}">Delete</a>
+                        <?php }} ?>
                 </div>
               </div>
               <div class="form-actions">

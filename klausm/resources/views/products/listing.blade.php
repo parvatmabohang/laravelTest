@@ -141,7 +141,10 @@
 							<div class="product-image-wrapper">
 								<div class="single-products">
 										<div class="productinfo text-center">
-											<img src="{{ asset('/images/backend_images/products/medium/'.$product->image) }}" alt="" />
+                                            <?php $tyn=""; foreach($product['images'] as $ty){
+                                              $tyn=$ty['image'];
+                                             }?>
+											<img src="{{ asset('/images/backend_images/products/medium/'.$tyn) }}" alt="" />
                                             <h2>NRs.{{ $product->price}}</h2>
                                             <p>{{ $product->product_name}}</p>
                                             <a href="#" class="btn btn-default add-to-cart">View Details</a><br>
